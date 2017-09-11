@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1BAEFECC-9238-4DD6-9AEF-56BA91367604}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Fibo.First</RootNamespace>
+    <AssemblyName>Fibo.First</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="StructureMap, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.5.2\lib\net45\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application.cs" />
+    <Compile Include="DependencyConfig.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fibo.Logging\Fibo.Logging.csproj">
+      <Project>{B9F1B8E0-03F8-413F-8EEA-DF4701F8C378}</Project>
+      <Name>Fibo.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Transport\Fibo.Transport.csproj">
+      <Project>{ECF2626C-A1BB-4D7F-AA64-3E8B7D8A4408}</Project>
+      <Name>Fibo.Transport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Storage\Fibo.Storage.csproj">
+      <Project>{492C1FA1-53D2-4AF0-81C0-B7F62F2FC263}</Project>
+      <Name>Fibo.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Messages\Fibo.Messages.csproj">
+      <Project>{26E63DBE-9A14-4973-A65E-827C6F39CB83}</Project>
+      <Name>Fibo.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Calculator\Fibo.Calculator.csproj">
+      <Project>{AE94D66F-48DD-4851-8ED7-0749926C4661}</Project>
+      <Name>Fibo.Calculator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Transport.Rabbit\Fibo.Transport.Rabbit.csproj">
+      <Project>{E7B16A77-B2F4-45B1-83E1-392C5C7D2848}</Project>
+      <Name>Fibo.Transport.Rabbit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Transport.Rest\Fibo.Transport.Rest.csproj">
+      <Project>{5B89963E-BF75-4522-A584-F3BEBEA2B158}</Project>
+      <Name>Fibo.Transport.Rest</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
