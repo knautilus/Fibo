@@ -39,18 +39,22 @@ namespace Fibo.Second.Controllers
                 return BadRequest(error);
             }
 
-            ulong result = 0;
-
             try
             {
                 var previousNumber = _storage.GetValue(sessionId);
-                result = _calculator.Calculate(previousNumber, message.Number);
+                if (!_calculator.Calculate(previousNumber, message.Number, out ulong result))
+                {
+                    _logger.Log(string.Format("{0}: {1}", sessionId, "Finished"), LogEventType.Info);
+                    return Ok();
+                }
                 _storage.SetValue(sessionId, result);
                 _logger.Log(string.Format("{0}: {1}", sessionId, result), LogEventType.Info);
-            }
-            catch (OverflowException)
-            {
-                _logger.Log(string.Format("{0}: {1}", sessionId, "Finished"), LogEventType.Info);
+                var response = await _sender.SendAsync(new FibonacciMessage { Number = result }, sessionId);
+                if (response.StatusCode != Response.OkCode)
+                {
+                    _logger.Log(string.Format("{0}: {1}", sessionId, response.Message), LogEventType.Error);
+                    return InternalServerError(response.Exception);
+                }
                 return Ok();
             }
             catch (Exception ex)
@@ -58,14 +62,6 @@ namespace Fibo.Second.Controllers
                 _logger.Log(string.Format("{0}: {1}", sessionId, ex.Message), LogEventType.Error);
                 return InternalServerError(ex);
             }
-
-            var response = await _sender.SendAsync(new FibonacciMessage { Number = result }, sessionId);
-            if (response.StatusCode != Response.OkCode)
-            {
-                _logger.Log(string.Format("{0}: {1}", sessionId, response.Message), LogEventType.Error);
-                return InternalServerError(response.Exception);
-            }
-            return Ok();
         }
     }
 }

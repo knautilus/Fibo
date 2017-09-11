@@ -31,7 +31,7 @@ namespace Fibo.First
 
         public async void RunAsync(int count)
         {
-            _logger.Log("Initializing transport", LogEventType.Warn);
+            _logger.Log("Initializing transport", LogEventType.Info);
             try
             {
                 _consumer.SetAction((msg, id) => ConsumeAsync(msg, id));
@@ -41,7 +41,7 @@ namespace Fibo.First
                 _logger.Log(ex.Message, LogEventType.Error);
                 return;
             }
-            _logger.Log("Transport initialized", LogEventType.Warn);
+            _logger.Log("Transport initialized", LogEventType.Info);
 
             for (int i = 1; i <= count; i++)
             {
@@ -57,31 +57,33 @@ namespace Fibo.First
             }
         }
 
-        private Task ConsumeAsync(FibonacciMessage message, string sessionId)
+        private async Task ConsumeAsync(FibonacciMessage message, string sessionId)
         {
             if (string.IsNullOrWhiteSpace(sessionId))
             {
                 _logger.Log("SessionId not specified", LogEventType.Error);
-                return Task.CompletedTask;
+                return;
             }
 
             try
             {
                 var previousNumber = _storage.GetValue(sessionId);
-                var result = _calculator.Calculate(previousNumber, message.Number);
+                if (!_calculator.Calculate(previousNumber, message.Number, out ulong result))
+                {
+                    _logger.Log(string.Format("{0}: {1}", sessionId, "Finished"), LogEventType.Info);
+                    return;
+                }
                 _storage.SetValue(sessionId, result);
                 _logger.Log(string.Format("{0}: {1}", sessionId, result), LogEventType.Info);
-                return _sender.SendAsync(new FibonacciMessage { Number = result }, sessionId);
-            }
-            catch (OverflowException)
-            {
-                _logger.Log(string.Format("{0}: {1}", sessionId, "Finished"), LogEventType.Info);
-                return Task.CompletedTask;
+                var response = await _sender.SendAsync(new FibonacciMessage { Number = result }, sessionId);
+                if (response.StatusCode != Response.OkCode)
+                {
+                    _logger.Log(string.Format("{0}: {1}", sessionId, response.Message), LogEventType.Error);
+                }
             }
             catch (Exception ex)
             {
                 _logger.Log(string.Format("{0}: {1}", sessionId, ex.Message), LogEventType.Error);
-                return Task.CompletedTask;
             }
         }
     }

@@ -2,6 +2,6 @@
 {
     public interface ICalculator<T>
     {
-        ulong Calculate(T operandA, T operandB);
+        bool Calculate(T operandA, T operandB, out T result);
     }
 }

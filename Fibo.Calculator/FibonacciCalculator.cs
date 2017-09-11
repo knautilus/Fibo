@@ -4,13 +4,22 @@ namespace Fibo.Processing
 {
     public class FibonacciCalculator : ICalculator<ulong>
     {
-        public ulong Calculate(ulong operandA, ulong operandB)
+        public bool Calculate(ulong operandA, ulong operandB, out ulong result)
         {
             if (operandA == 0 && operandB != 1)
             {
                 throw new ArgumentException("Invalid operands");
             }
-            return checked(operandA + operandB);
+            try
+            {
+                result = checked(operandA + operandB);
+                return true;
+            }
+            catch (OverflowException)
+            {
+                result = 0;
+                return false;
+            }
         }
     }
 }
