@@ -6,20 +6,24 @@ using Fibo.Transport.Rabbit;
 using StructureMap;
 using System.Configuration;
 
-public class DependencyConfig : Registry
+namespace Fibo.Second
 {
-    public DependencyConfig()
+    public class DependencyConfig : Registry
     {
-        Scan(scan => {
-            scan.TheCallingAssembly();
-            scan.WithDefaultConventions();
-        });
-        For(typeof(ISender<>)).Singleton().Use(typeof(RabbitSender<>))
-            .Ctor<string>("hostUri").Is(ConfigurationManager.AppSettings["rabbitHost"])
-            .Ctor<string>("username").Is(ConfigurationManager.AppSettings["rabbitUsername"])
-            .Ctor<string>("password").Is(ConfigurationManager.AppSettings["rabbitPassword"]);
-        For(typeof(ICalculator<>)).Singleton().Use(typeof(FibonacciCalculator));
-        For(typeof(IStorage<,>)).Singleton().Use(typeof(DictionaryStorage<,>));
-        For<ILogger>().Singleton().Use<Log4NetLogger>();
+        public DependencyConfig()
+        {
+            Scan(scan =>
+            {
+                scan.TheCallingAssembly();
+                scan.WithDefaultConventions();
+            });
+            For(typeof(ISender<>)).Singleton().Use(typeof(RabbitSender<>))
+                .Ctor<string>("hostUri").Is(ConfigurationManager.AppSettings["rabbitHost"])
+                .Ctor<string>("username").Is(ConfigurationManager.AppSettings["rabbitUsername"])
+                .Ctor<string>("password").Is(ConfigurationManager.AppSettings["rabbitPassword"]);
+            For(typeof(ICalculator<>)).Singleton().Use(typeof(FibonacciCalculator));
+            For(typeof(IStorage<,>)).Singleton().Use(typeof(DictionaryStorage<,>));
+            For<ILogger>().Singleton().Use<Log4NetLogger>();
+        }
     }
 }

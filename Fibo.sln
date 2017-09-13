@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fibo.Messages", "Fibo.Messages\Fibo.Messages.csproj", "{26E63DBE-9A14-4973-A65E-827C6F39CB83}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fibo.Transport", "Fibo.Transport\Fibo.Transport.csproj", "{ECF2626C-A1BB-4D7F-AA64-3E8B7D8A4408}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fibo.Transport.Rabbit", "Fibo.Transport.Rabbit\Fibo.Transport.Rabbit.csproj", "{E7B16A77-B2F4-45B1-83E1-392C5C7D2848}"
@@ -30,6 +28,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AC8D1012-A935-46EE-8D9D-B9B3568A8C7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fibo.Tests", "Fibo.Tests\Fibo.Tests.csproj", "{40F05282-0BD0-49BD-9FCF-EB9D414A33D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fibo.Messages", "Fibo.Messages\Fibo.Messages.csproj", "{26E63DBE-9A14-4973-A65E-827C6F39CB83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace Cocktails.Api.Controllers
+namespace Fibo.Second.Controllers
 {
     public class ApiInfoController : ApiController
     {

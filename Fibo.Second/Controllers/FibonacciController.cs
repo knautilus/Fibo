@@ -44,22 +44,22 @@ namespace Fibo.Second.Controllers
                 var previousNumber = _storage.GetValue(sessionId);
                 if (!_calculator.Calculate(previousNumber, message.Number, out ulong result))
                 {
-                    _logger.Log(string.Format("{0}: {1}", sessionId, "Finished"), LogEventType.Info);
+                    _logger.Log($"{sessionId}: Finished", LogEventType.Info);
                     return Ok();
                 }
                 _storage.SetValue(sessionId, result);
-                _logger.Log(string.Format("{0}: {1}", sessionId, result), LogEventType.Info);
+                _logger.Log($"{sessionId}: {result}", LogEventType.Info);
                 var response = await _sender.SendAsync(new FibonacciMessage { Number = result }, sessionId);
                 if (response.StatusCode != Response.OkCode)
                 {
-                    _logger.Log(string.Format("{0}: {1}", sessionId, response.Message), LogEventType.Error);
+                    _logger.Log($"{sessionId}: {response.Message}", LogEventType.Error);
                     return InternalServerError(response.Exception);
                 }
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.Log(string.Format("{0}: {1}", sessionId, ex.Message), LogEventType.Error);
+                _logger.Log($"{sessionId}: {ex.Message}", LogEventType.Error);
                 return InternalServerError(ex);
             }
         }
