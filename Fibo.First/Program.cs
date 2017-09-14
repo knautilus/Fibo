@@ -14,7 +14,7 @@ namespace Fibo.First
             Console.WriteLine("Fibonacci Numbers Generator");
             Console.WriteLine("Enter number of calculations (1 to 1000):");
 
-            int number = 0;
+            int number;
 
             do
             {

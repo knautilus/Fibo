@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fibo.Processing
+namespace Fibo.Calculator
 {
     public class FibonacciCalculator : ICalculator<ulong>
     {

@@ -1,4 +1,4 @@
-﻿namespace Fibo.Processing
+﻿namespace Fibo.Calculator
 {
     public interface ICalculator<T>
     {

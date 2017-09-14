@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Fibo.Logging;
 using Fibo.Messages;
-using Fibo.Processing;
+using Fibo.Calculator;
 using Fibo.Storage;
 using Fibo.Transport;
 
@@ -34,7 +34,7 @@ namespace Fibo.Second.Controllers
             var sessionId = Request.Headers.GetValues(Constants.SessionIdHeader).FirstOrDefault();
             if (string.IsNullOrWhiteSpace(sessionId))
             {
-                var error = "SessionId not specified";
+                const string error = "SessionId not specified";
                 _logger.Log(error, LogEventType.Error);
                 return BadRequest(error);
             }

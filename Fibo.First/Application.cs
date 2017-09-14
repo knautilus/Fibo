@@ -1,6 +1,6 @@
 ﻿using Fibo.Logging;
 using Fibo.Messages;
-using Fibo.Processing;
+using Fibo.Calculator;
 using Fibo.Storage;
 using Fibo.Transport;
 using System;
@@ -34,7 +34,7 @@ namespace Fibo.First
             _logger.Log("Initializing transport", LogEventType.Info);
             try
             {
-                _consumer.SetAction((msg, id) => ConsumeAsync(msg, id));
+                _consumer.SetAction(ConsumeAsync);
             }
             catch (Exception ex)
             {
