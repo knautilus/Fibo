@@ -1,25 +1,11 @@
 # Fibo
-RabbitMQ, RestAPI test application
+RabbitMQ + WebAPI test application.
 
-Два приложения общаются друг с другом через транспорты, реализуя расчет чисел Фибоначчи.
+Two applications send messages to each other calculating Fibonacci numbers.
+First app sends Ni to the second one.
+Second app calculates Ni+1 = Ni-1 + Ni and sends it to the first one.
+First app calculates Ni + Ni+1 and sends the result to the second one.
+And so on.
 
-Логика расчета одной последовательности такая:
-1.	Первое инициализирует расчет.
-2.	Первое отправляет второму N_I
-3.	Второе вычисляет N_(I + 1) = N_(I – 1) + N_I и шлет обратно
-4.	Первое вычисляет N_(I + 1) + N_I и отправляет второму
-5.	И так до остановки приложений.
-
-Особенности:
-1.	Первое приложение при старте получает параметр – целое число, сколько асинхронных расчетов начать.
-2.	Все расчеты идут параллельно.
-3.	Передача данных от 1 к 2 идет через Rest WebApi
-4.	Передача данных от 2 к 1 идет посредством MessageBus.
-5.	Язык C#, среда MS .NET Framework версии от 4.0.
-
-Рекомендуемые технологии:
--	ASP.NET WebApi 
--	RestSharp
--	MassTransit Bus
--	Log4Net
--	StructureMap
+Messages from 1 to 2 go through WebAPI.
+Messages from 2 to 1 go through RabbitMQ.
