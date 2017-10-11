@@ -1,7 +1,9 @@
-﻿namespace Fibo.Calculator
+﻿using System.Numerics;
+
+namespace Fibo.Calculator
 {
-    public interface ICalculator<T>
+    public interface ICalculator
     {
-        bool Calculate(T operandA, T operandB, out T result);
+        bool Calculate(BigInteger operandA, BigInteger operandB, out BigInteger result);
     }
 }

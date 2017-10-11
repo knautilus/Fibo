@@ -4,27 +4,20 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Fibo.Logging;
 using Fibo.Messages;
-using Fibo.Calculator;
-using Fibo.Storage;
+using Fibo.Processing;
 using Fibo.Transport;
 
 namespace Fibo.Second.Controllers
 {
     public class FibonacciController : ApiController
     {
-        private readonly ISender<FibonacciMessage> _sender;
-        private readonly ICalculator<ulong> _calculator;
-        private readonly IStorage<string, ulong> _storage;
+        private readonly IProcessor _processor;
         private readonly ILogger _logger;
 
-        public FibonacciController(ISender<FibonacciMessage> sender,
-            ICalculator<ulong> calculator,
-            IStorage<string, ulong> storage,
+        public FibonacciController(IProcessor processor,
             ILogger logger)
         {
-            _sender = sender;
-            _calculator = calculator;
-            _storage = storage;
+            _processor = processor;
             _logger = logger;
         }
 
@@ -41,20 +34,13 @@ namespace Fibo.Second.Controllers
 
             try
             {
-                var previousNumber = _storage.GetValue(sessionId);
-                if (!_calculator.Calculate(previousNumber, message.Number, out ulong result))
+                var result = await _processor.ProcessMessageAsync(message, sessionId);
+                if (result.HasError)
                 {
-                    _logger.Log($"{sessionId}: Finished", LogEventType.Info);
-                    return Ok();
+                    _logger.Log($"{sessionId}: {result.Error}", LogEventType.Error);
+                    return InternalServerError(new Exception(result.Error));
                 }
-                _storage.SetValue(sessionId, result);
-                _logger.Log($"{sessionId}: {result}", LogEventType.Info);
-                var response = await _sender.SendAsync(new FibonacciMessage { Number = result }, sessionId);
-                if (response.StatusCode != Response.OkCode)
-                {
-                    _logger.Log($"{sessionId}: {response.Message}", LogEventType.Error);
-                    return InternalServerError(response.Exception);
-                }
+                _logger.Log($"{sessionId}: {result.Value}", LogEventType.Info);
                 return Ok();
             }
             catch (Exception ex)

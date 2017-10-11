@@ -1,5 +1,5 @@
-﻿using RestSharp;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using RestSharp;
 
 namespace Fibo.Transport.Rest
 {
@@ -21,7 +21,10 @@ namespace Fibo.Transport.Rest
 
         public async Task<Response> SendAsync(T message, string sessionId)
         {
-            var request = new RestRequest(_resource, Method.POST);
+            var request = new RestRequest(_resource, Method.POST)
+            {
+                JsonSerializer = BigIntegerJsonSerializer.Default
+            };
             request.AddJsonBody(message);
             request.AddHeader(Constants.SessionIdHeader, sessionId);
             var result = await _client.ExecuteTaskAsync(request);

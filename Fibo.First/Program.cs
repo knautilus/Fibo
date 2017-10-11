@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Fibo.Utils;
+using Newtonsoft.Json;
 using StructureMap;
 
 namespace Fibo.First
@@ -10,6 +13,10 @@ namespace Fibo.First
             var container = Container.For<DependencyConfig>();
 
             var app = container.GetInstance<Application>();
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter> { new BigIntegerConverter() }
+            };
 
             Console.WriteLine("Fibonacci Numbers Generator");
             Console.WriteLine("Enter number of calculations (1 to 1000):");

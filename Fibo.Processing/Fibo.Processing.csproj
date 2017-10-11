@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{26E63DBE-9A14-4973-A65E-827C6F39CB83}</ProjectGuid>
+    <ProjectGuid>{C64BC246-77EF-4F75-A142-26349B43FFFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fibo.Messages</RootNamespace>
-    <AssemblyName>Fibo.Messages</AssemblyName>
+    <RootNamespace>Fibo.Processing</RootNamespace>
+    <AssemblyName>Fibo.Processing</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,8 +41,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FibonacciMessage.cs" />
+    <Compile Include="IProcessor.cs" />
+    <Compile Include="Processor.cs" />
+    <Compile Include="ProcessResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fibo.Calculator\Fibo.Calculator.csproj">
+      <Project>{AE94D66F-48DD-4851-8ED7-0749926C4661}</Project>
+      <Name>Fibo.Calculator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Messages\Fibo.Messages.csproj">
+      <Project>{26E63DBE-9A14-4973-A65E-827C6F39CB83}</Project>
+      <Name>Fibo.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Storage\Fibo.Storage.csproj">
+      <Project>{492C1FA1-53D2-4AF0-81C0-B7F62F2FC263}</Project>
+      <Name>Fibo.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Transport\Fibo.Transport.csproj">
+      <Project>{ECF2626C-A1BB-4D7F-AA64-3E8B7D8A4408}</Project>
+      <Name>Fibo.Transport</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

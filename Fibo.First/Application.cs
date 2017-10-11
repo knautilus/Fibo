@@ -1,31 +1,25 @@
 ﻿using Fibo.Logging;
 using Fibo.Messages;
-using Fibo.Calculator;
-using Fibo.Storage;
+using Fibo.Processing;
 using Fibo.Transport;
 using System;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace Fibo.First
 {
     public class Application
     {
-        private readonly ISender<FibonacciMessage> _sender;
         private readonly IConsumer<FibonacciMessage> _consumer;
-        private readonly ICalculator<ulong> _calculator;
-        private readonly IStorage<string, ulong> _storage;
+        private readonly IProcessor _processor;
         private readonly ILogger _logger;
 
-        public Application(ISender<FibonacciMessage> sender,
-            IConsumer<FibonacciMessage> consumer,
-            ICalculator<ulong> calculator,
-            IStorage<string, ulong> storage,
+        public Application(IConsumer<FibonacciMessage> consumer,
+            IProcessor processor,
             ILogger logger)
         {
-            _calculator = calculator;
-            _sender = sender;
+            _processor = processor;
             _consumer = consumer;
-            _storage = storage;
             _logger = logger;
         }
 
@@ -46,14 +40,9 @@ namespace Fibo.First
             for (int i = 1; i <= count; i++)
             {
                 var sessionId = i.ToString();
-                ulong number = 1;
-                _storage.SetValue(sessionId, number);
-                _logger.Log($"{sessionId}: {number}", LogEventType.Info);
-                var response = await _sender.SendAsync(new FibonacciMessage { Number = number }, sessionId);
-                if (response.StatusCode != Response.OkCode)
-                {
-                    _logger.Log($"{sessionId}: {response.Message}", LogEventType.Error);
-                }
+                BigInteger number = 1;
+
+                await ConsumeAsync(new FibonacciMessage {Number = number}, sessionId);
             }
         }
 
@@ -67,19 +56,12 @@ namespace Fibo.First
 
             try
             {
-                var previousNumber = _storage.GetValue(sessionId);
-                if (!_calculator.Calculate(previousNumber, message.Number, out ulong result))
+                var result = await _processor.ProcessMessageAsync(message, sessionId);
+                if (result.HasError)
                 {
-                    _logger.Log($"{sessionId}: Finished", LogEventType.Info);
-                    return;
+                    _logger.Log($"{sessionId}: {result.Error}", LogEventType.Error);
                 }
-                _storage.SetValue(sessionId, result);
-                _logger.Log($"{sessionId}: {result}", LogEventType.Info);
-                var response = await _sender.SendAsync(new FibonacciMessage { Number = result }, sessionId);
-                if (response.StatusCode != Response.OkCode)
-                {
-                    _logger.Log($"{sessionId}: {response.Message}", LogEventType.Error);
-                }
+                _logger.Log($"{sessionId}: {result.Value}", LogEventType.Info);
             }
             catch (Exception ex)
             {

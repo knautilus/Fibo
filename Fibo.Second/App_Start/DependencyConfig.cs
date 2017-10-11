@@ -1,5 +1,6 @@
 ﻿using Fibo.Logging;
 using Fibo.Calculator;
+using Fibo.Processing;
 using Fibo.Storage;
 using Fibo.Transport;
 using Fibo.Transport.Rabbit;
@@ -21,8 +22,9 @@ namespace Fibo.Second
                 .Ctor<string>("hostUri").Is(ConfigurationManager.AppSettings["rabbitHost"])
                 .Ctor<string>("username").Is(ConfigurationManager.AppSettings["rabbitUsername"])
                 .Ctor<string>("password").Is(ConfigurationManager.AppSettings["rabbitPassword"]);
-            For(typeof(ICalculator<>)).Singleton().Use(typeof(FibonacciCalculator));
+            For(typeof(ICalculator)).Singleton().Use(typeof(FibonacciCalculator));
             For(typeof(IStorage<,>)).Singleton().Use(typeof(DictionaryStorage<,>));
+            For(typeof(IProcessor)).Singleton().Use(typeof(Processor));
             For<ILogger>().Singleton().Use<Log4NetLogger>();
         }
     }

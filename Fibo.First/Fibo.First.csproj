@@ -32,12 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StructureMap.4.5.2\lib\net45\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +64,10 @@
     <ProjectReference Include="..\Fibo.Logging\Fibo.Logging.csproj">
       <Project>{B9F1B8E0-03F8-413F-8EEA-DF4701F8C378}</Project>
       <Name>Fibo.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Processing\Fibo.Processing.csproj">
+      <Project>{C64BC246-77EF-4F75-A142-26349B43FFFE}</Project>
+      <Name>Fibo.Processing</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fibo.Transport\Fibo.Transport.csproj">
       <Project>{ECF2626C-A1BB-4D7F-AA64-3E8B7D8A4408}</Project>
@@ -84,6 +92,10 @@
     <ProjectReference Include="..\Fibo.Transport.Rest\Fibo.Transport.Rest.csproj">
       <Project>{5B89963E-BF75-4522-A584-F3BEBEA2B158}</Project>
       <Name>Fibo.Transport.Rest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Utils\Fibo.Utils.csproj">
+      <Project>{B25EA629-FE2C-441A-9044-6D43ACAFB5C0}</Project>
+      <Name>Fibo.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

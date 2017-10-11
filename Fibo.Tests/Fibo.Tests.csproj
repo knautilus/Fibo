@@ -33,11 +33,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.7.137.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.7.137\lib\net45\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,9 +55,8 @@
   <ItemGroup>
     <Compile Include="DictionaryStorageTests.cs" />
     <Compile Include="FibonacciCalculatorTests.cs" />
+    <Compile Include="ProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RabbitConsumerTests.cs" />
-    <Compile Include="RabbitSenderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -64,16 +71,16 @@
       <Project>{AE94D66F-48DD-4851-8ED7-0749926C4661}</Project>
       <Name>Fibo.Calculator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fibo.Processing\Fibo.Processing.csproj">
+      <Project>{C64BC246-77EF-4F75-A142-26349B43FFFE}</Project>
+      <Name>Fibo.Processing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fibo.Storage\Fibo.Storage.csproj">
       <Project>{492C1FA1-53D2-4AF0-81C0-B7F62F2FC263}</Project>
       <Name>Fibo.Storage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fibo.Transport.Rabbit\Fibo.Transport.Rabbit.csproj">
-      <Project>{E7B16A77-B2F4-45B1-83E1-392C5C7D2848}</Project>
-      <Name>Fibo.Transport.Rabbit</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fibo.Transport\Fibo.Transport.csproj">
-      <Project>{ECF2626C-A1BB-4D7F-AA64-3E8B7D8A4408}</Project>
+      <Project>{ecf2626c-a1bb-4d7f-aa64-3e8b7d8a4408}</Project>
       <Name>Fibo.Transport</Name>
     </ProjectReference>
   </ItemGroup>

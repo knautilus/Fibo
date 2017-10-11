@@ -1,4 +1,5 @@
-﻿using Fibo.Storage;
+﻿using System.Numerics;
+using Fibo.Storage;
 using NUnit.Framework;
 
 namespace Fibo.Tests
@@ -6,12 +7,12 @@ namespace Fibo.Tests
     [TestFixture]
     public class DictionaryStorageTests
     {
-        private IStorage<string, ulong> _storage;
+        private IStorage<string, BigInteger> _storage;
 
         [SetUp]
         public void SetUp()
         {
-            _storage = new DictionaryStorage<string, ulong>();
+            _storage = new DictionaryStorage<string, BigInteger>();
         }
 
         [Test]
@@ -24,14 +25,14 @@ namespace Fibo.Tests
         public void GetNonexistentValue()
         {
             var result = _storage.GetValue("key");
-            Assert.AreEqual(default(ulong), result);
+            Assert.AreEqual(default(BigInteger), result);
         }
 
         [Test]
         public void GetAfterSet()
         {
-            ulong value1 = 3;
-            ulong value2 = 5;
+            BigInteger value1 = 3;
+            BigInteger value2 = 5;
             _storage.SetValue("key1", value1);
             _storage.SetValue("key2", value2);
             var result1 = _storage.GetValue("key1");
@@ -43,8 +44,8 @@ namespace Fibo.Tests
         [Test]
         public void GetAfterUpdate()
         {
-            ulong value1 = 3;
-            ulong value2 = 5;
+            BigInteger value1 = 3;
+            BigInteger value2 = 5;
             _storage.SetValue("key1", value1);
             _storage.SetValue("key1", value2);
             var result = _storage.GetValue("key1");

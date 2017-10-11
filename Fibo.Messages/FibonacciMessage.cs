@@ -1,7 +1,9 @@
-﻿namespace Fibo.Messages
+﻿using System.Numerics;
+
+namespace Fibo.Messages
 {
     public class FibonacciMessage
     {
-        public ulong Number { get; set; }
+        public BigInteger Number { get; set; }
     }
 }

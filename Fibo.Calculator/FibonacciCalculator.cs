@@ -1,25 +1,18 @@
-﻿using System;
+﻿using System.Numerics;
 
 namespace Fibo.Calculator
 {
-    public class FibonacciCalculator : ICalculator<ulong>
+    public class FibonacciCalculator : ICalculator
     {
-        public bool Calculate(ulong operandA, ulong operandB, out ulong result)
+        public bool Calculate(BigInteger operandA, BigInteger operandB, out BigInteger result)
         {
             if (operandA == 0 && operandB != 1)
-            {
-                throw new ArgumentException("Invalid operands");
-            }
-            try
-            {
-                result = checked(operandA + operandB);
-                return true;
-            }
-            catch (OverflowException)
             {
                 result = 0;
                 return false;
             }
+            result = operandA + operandB;
+            return true;
         }
     }
 }

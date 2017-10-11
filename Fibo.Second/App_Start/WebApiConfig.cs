@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Fibo.Utils;
 
 namespace Fibo.Second
 {
@@ -6,7 +7,8 @@ namespace Fibo.Second
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            var jsonSettings = config.Formatters.JsonFormatter.SerializerSettings;
+            jsonSettings.Converters.Add(new BigIntegerConverter());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

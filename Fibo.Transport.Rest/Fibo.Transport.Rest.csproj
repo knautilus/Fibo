@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigIntegerJsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestSender.cs" />
   </ItemGroup>
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\Fibo.Transport\Fibo.Transport.csproj">
       <Project>{ecf2626c-a1bb-4d7f-aa64-3e8b7d8a4408}</Project>
       <Name>Fibo.Transport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fibo.Utils\Fibo.Utils.csproj">
+      <Project>{b25ea629-fe2c-441a-9044-6d43acafb5c0}</Project>
+      <Name>Fibo.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
