@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fibo.First
 {
-    public class Application
+    public class Application : IApplication
     {
         private readonly IConsumer<FibonacciMessage> _consumer;
         private readonly IProcessor _processor;

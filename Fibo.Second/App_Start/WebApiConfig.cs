@@ -1,4 +1,7 @@
-﻿using System.Web.Http;
+﻿using System.Reflection;
+using System.Web.Http;
+using Autofac;
+using Autofac.Integration.WebApi;
 using Fibo.Utils;
 
 namespace Fibo.Second
@@ -18,6 +21,13 @@ namespace Fibo.Second
                 routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var builder = new ContainerBuilder();
+            builder.RegisterSecond();
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            var container = builder.Build();
+
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }

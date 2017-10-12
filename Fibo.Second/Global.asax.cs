@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using WebApi.StructureMap;
 
 namespace Fibo.Second
 {
@@ -8,7 +7,6 @@ namespace Fibo.Second
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            GlobalConfiguration.Configuration.UseStructureMap<DependencyConfig>();
         }
 
         protected void Application_End()

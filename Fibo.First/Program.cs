@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Autofac;
 using Fibo.Utils;
 using Newtonsoft.Json;
-using StructureMap;
 
 namespace Fibo.First
 {
@@ -10,38 +10,44 @@ namespace Fibo.First
     {
         static void Main(string[] args)
         {
-            var container = Container.For<DependencyConfig>();
+            var builder = new ContainerBuilder();
+            builder.RegisterFirst();
+            var container = builder.Build();
 
-            var app = container.GetInstance<Application>();
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            using (var scope = container.BeginLifetimeScope())
             {
-                Converters = new List<JsonConverter> { new BigIntegerConverter() }
-            };
+                var app = scope.Resolve<IApplication>();
 
-            Console.WriteLine("Fibonacci Numbers Generator");
-            Console.WriteLine("Enter number of calculations (1 to 1000):");
-
-            int number;
-
-            do
-            {
-                string input = Console.ReadLine();
-                if (int.TryParse(input, out number))
+                JsonConvert.DefaultSettings = () => new JsonSerializerSettings
                 {
-                    if (number >= 1 && number <= 1000)
+                    Converters = new List<JsonConverter> { new BigIntegerConverter() }
+                };
+
+                Console.WriteLine("Fibonacci Numbers Generator");
+                Console.WriteLine("Enter number of calculations (1 to 1000):");
+
+                int number;
+
+                do
+                {
+                    string input = Console.ReadLine();
+                    if (int.TryParse(input, out number))
                     {
-                        break;
+                        if (number >= 1 && number <= 1000)
+                        {
+                            break;
+                        }
                     }
                 }
+                while (true);
+
+                app.RunAsync(number);
+
+                Console.WriteLine("Please find results in logs");
+                Console.WriteLine("Processing...");
+                Console.WriteLine("Press Enter to stop");
+                Console.ReadLine();
             }
-            while (true);
-
-            app.RunAsync(number);
-
-            Console.WriteLine("Please find results in logs");
-            Console.WriteLine("Processing...");
-            Console.WriteLine("Press Enter to stop");
-            Console.ReadLine();
 
             container.Dispose();
         }
